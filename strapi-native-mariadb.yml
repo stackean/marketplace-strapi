@@ -4,7 +4,7 @@ name: Strapi with MariaDB
 globals:
   DB_NAME: strapi
   DB_USER: strapi_user
-  DB_PASS: "${fn.password(12)}"
+  DB_PASS: ${fn.password(12)}
 
 nodes:
   - nodeType: mariadb-dockerized
@@ -23,20 +23,20 @@ nodes:
       DATABASE_CLIENT: mysql
       DATABASE_HOST: ${nodes.sqldb.address}
       DATABASE_PORT: 3306
-      DATABASE_USERNAME: "${globals.DB_USER}"
-      DATABASE_PASSWORD: "${globals.DB_PASS}"
-      DATABASE_NAME: "${globals.DB_NAME}"
+      DATABASE_USERNAME: ${globals.DB_USER}
+      DATABASE_PASSWORD: ${globals.DB_PASS}
+      DATABASE_NAME: ${globals.DB_NAME}
 
 onInstall:
   - prepareSqlDatabase:
       nodeGroup: sqldb
       loginCredentials:
         user: root
-        password: "${nodes.sqldb.password}"
-      newDatabaseName: "${globals.DB_NAME}"
+        password: ${nodes.sqldb.password}
+      newDatabaseName: ${globals.DB_NAME}
       newDatabaseUser:
-        name: "${globals.DB_USER}"
-        password: "${globals.DB_PASS}" 
+        name: ${globals.DB_USER}
+        password: ${globals.DB_PASS}
   - deploy [cp]:
       archive: https://github.com/strapi/strapi/archive/v3.4.5.zip
       name: strapi
